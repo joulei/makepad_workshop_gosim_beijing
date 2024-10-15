@@ -4,5 +4,5 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-makepad-widgets = { path = "../../code/rust/futurewei/mkpd/makepad/widgets"}
-#TODO: link to git
+#makepad-widgets = { path = "../../code/rust/futurewei/mkpd/makepad/widgets"}
+makepad-widgets = { git = "https://github.com/makepad/makepad", branch = "rik" }

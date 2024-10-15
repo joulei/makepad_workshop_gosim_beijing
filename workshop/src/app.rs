@@ -13,7 +13,6 @@ live_design! {
             window: {position: vec2(970, 80), inner_size: vec2(440, 800)},
             pass: {clear_color: (COLOR_BG)}
             body = {
-                <Home> {}
             }
         }
     }

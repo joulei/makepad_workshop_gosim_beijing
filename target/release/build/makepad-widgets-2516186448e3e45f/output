@@ -1,0 +1,2 @@
+cargo:rustc-check-cfg=cfg(ignore_query, panic_query)
+cargo:rerun-if-env-changed=MAKEPAD
