@@ -1,0 +1,8 @@
+[package]
+name = "solution"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+makepad-widgets = { path = "../../code/rust/futurewei/mkpd/makepad/widgets"}
+#TODO: link to git
