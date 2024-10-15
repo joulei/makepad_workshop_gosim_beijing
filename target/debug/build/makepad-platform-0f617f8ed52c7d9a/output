@@ -1,6 +1,0 @@
-cargo:rustc-check-cfg=cfg(apple_bundle,apple_sim,lines,linux_direct,no_android_choreographer,use_unstable_unix_socket_ancillary_data_2021)
-cargo:rerun-if-env-changed=MAKEPAD
-cargo:rerun-if-env-changed=MAKEPAD_PACKAGE_DIR
-cargo:rustc-link-search=native=/Users/devlian/workshop/target/debug/build/makepad-platform-0f617f8ed52c7d9a/out
-cargo:rustc-link-lib=static=metal_xpc
-cargo:rerun-if-changed=src/os/apple/metal_xpc.m
