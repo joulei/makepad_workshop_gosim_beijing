@@ -16,20 +16,6 @@ live_design! {
             window: {position: vec2(970, 80), inner_size: vec2(440, 800)},
 
             body = {
-                show_bg: true
-                draw_bg: {
-                    fn pixel(self) -> vec4 {
-                        // gradient to make it slightly darker at the very bottom
-                        // Define the amount of darkening at the bottom (e.g., 5% darker)
-                        let darkened_color = (COLOR_BG_DARKER);
-
-                        // Use smoothstep for a smoother gradient transition
-                        let t = smoothstep(0.8, 1.0, self.pos.y);
-
-                        // Mix the colors based on the interpolated value 't'
-                        return mix(COLOR_BG, darkened_color, t);
-                    }
-                }
                 nav = <StackNavigation> {
                     root_view = <Home> {}
                     product_view = <StackNavigationView> {

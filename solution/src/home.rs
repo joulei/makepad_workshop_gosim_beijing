@@ -290,6 +290,18 @@ live_design! {
     }
 
     Home = <SectionDown> {
+        show_bg: true
+        draw_bg: {
+            fn pixel(self) -> vec4 {
+                // Gradient to make it slightly darker at the very bottom
+                // Use smoothstep for a smoother gradient transition
+                let result = smoothstep(0.8, 1.0, self.pos.y);
+                
+                // Mix the colors based on the interpolated value 'result'
+                return mix(COLOR_BG, COLOR_BG_DARKER, result);
+            }
+        }
+        
         padding: {top: 35, left: 20, right: 20, bottom: 25}
         flow: Down
         spacing: 5.0

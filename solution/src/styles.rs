@@ -12,10 +12,10 @@ live_design! {
     COLOR_BG = #232531
     COLOR_BG_DARKER = #211d20
         
-    COLOR_TEXT_PRIMARY = #6f7d95
-    COLOR_TEXT_SECONDARY = #a1b0c9
+    COLOR_TEXT_PRIMARY = #f
+    COLOR_TEXT_SECONDARY = #b
 
-    COLOR_ICON = (COLOR_TEXT_PRIMARY)
+    COLOR_ICON = #6f7d95
     COLOR_ICON_SECONDARY = #a1b0c9
 
     SectionRight = <View> { flow: Right }
