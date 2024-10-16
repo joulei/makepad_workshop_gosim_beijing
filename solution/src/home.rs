@@ -7,7 +7,6 @@ live_design! {
 
     import crate::styles::*;
 
-    GOLD = dep("crate://self/resources/img/covers/gold.jpg")
     SLEEP_IMG = dep("crate://self/resources/img/sleep.png")
 
     MOON = dep("crate://self/resources/img/moon.png")
@@ -187,6 +186,51 @@ live_design! {
         header = {
             icon = { source: (DUMBELL) }
             title = { text: "Workout" }
+        }
+
+        <SectionRight> {
+            spacing: 5
+            height: Fill
+            daily_workout = <RoundedView> {
+                cursor: Hand
+                width: Fit, height: Fill
+                align: {x: 0.5, y: 0.5}
+                padding: {left: 10, right: 10, top: 5, bottom: 5}
+                show_bg: true
+                draw_bg: {
+                    border_width: 1.0
+                    border_color: #2a
+                }
+                <Label> {
+                    text: "Daily\nWorkout"
+                    draw_text: {
+                        color: #2a
+                        text_style: <TextBold> {
+                            font_size: 9.0
+                        }
+                    }
+                }
+            }
+
+            abs_routine = <RoundedView> {
+                cursor: Hand
+                width: Fit, height: Fill
+                align: {x: 0.5, y: 0.5}
+                padding: {left: 10, right: 10, top: 5, bottom: 5}
+                show_bg: true
+                draw_bg: {
+                    color: (COLOR_BG)
+                }
+                <Label> {
+                    text: "Abs\nRoutine"
+                    draw_text: {
+                        color: #f
+                        text_style: <TextBold> {
+                            font_size: 9.0
+                        }
+                    }
+                }
+            }
         }
     }
 

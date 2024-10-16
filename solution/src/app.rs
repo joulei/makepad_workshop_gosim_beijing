@@ -4,12 +4,12 @@ live_design! {
     import makepad_widgets::base::*;
     import makepad_widgets::theme_desktop_dark::*;
     import makepad_draw::shader::std::*;
-
-    import crate::home::*;
-    import crate::timer_screen::*;
-    import crate::exercise_screen::*;
-    import crate::product_screen::*;
+    
     import crate::styles::*;
+    import crate::home::*;
+    import crate::daily_workout_screen::*;
+    import crate::abs_routine_screen::*;
+    import crate::product_screen::*;
 
     App = {{App}} {
         ui: <Window> {
@@ -32,18 +32,6 @@ live_design! {
                 }
                 nav = <StackNavigation> {
                     root_view = <Home> {}
-                    exercise_view = <StackNavigationView> {
-                        header = {
-                            content = {
-                                title_container = {
-                                    title = {
-                                        text: "Exercise"
-                                    }
-                                }
-                            }
-                        }
-                        body = <ExerciseScreen> {}
-                    }
                     product_view = <StackNavigationView> {
                         header = {
                             // padding: {left: 20.}
@@ -57,7 +45,19 @@ live_design! {
                         }
                         body = <ProductScreen> {}
                     }
-                    timer_view = <StackNavigationView> {
+                    daily_workout_view = <StackNavigationView> {
+                        header = {
+                            content = {
+                                title_container = {
+                                    title = {
+                                        text: "Exercise"
+                                    }
+                                }
+                            }
+                        }
+                        body = <DailyWorkoutScreen> {}
+                    }
+                    abs_routine_view = <StackNavigationView> {
                         header = {
                             content = {
                                 title_container = {
@@ -67,7 +67,7 @@ live_design! {
                                 }
                             }
                         }
-                        body = <TimerScreen> {}
+                        body = <AbsRoutineScreen> {}
                     }
                 }
             }
@@ -88,10 +88,10 @@ pub struct App {
 impl LiveRegister for App {
     fn live_register(cx: &mut Cx) {
         makepad_widgets::live_design(cx);
-        crate::home::live_design(cx);
-        crate::timer_screen::live_design(cx);
         crate::styles::live_design(cx);
-        crate::exercise_screen::live_design(cx);
+        crate::home::live_design(cx);
+        crate::abs_routine_screen::live_design(cx);
+        crate::daily_workout_screen::live_design(cx);
         crate::product_screen::live_design(cx);
     }
 }
@@ -109,11 +109,19 @@ impl MatchEvent for App {
             );
         }
 
-        if let Some(_) = self.ui.view(id!(workout_box)).finger_down(&actions) {
+        if let Some(_) = self.ui.view(id!(daily_workout)).finger_down(&actions) {
             cx.widget_action(
                 self.ui.widget_uid(),
                 &Scope::default().path,
-                StackNavigationAction::NavigateTo(live_id!(exercise_view)),
+                StackNavigationAction::NavigateTo(live_id!(daily_workout_view)),
+            );
+        }
+
+        if let Some(_) = self.ui.view(id!(abs_routine)).finger_down(&actions) {
+            cx.widget_action(
+                self.ui.widget_uid(),
+                &Scope::default().path,
+                StackNavigationAction::NavigateTo(live_id!(abs_routine_view)),
             );
         }
     }
@@ -123,26 +131,5 @@ impl AppMain for App {
     fn handle_event(&mut self, cx: &mut Cx, event: &Event) {
         self.ui.handle_event(cx, event, &mut Scope::empty());
         self.match_event(cx, event);
-        let widget_uid = self.ui.widget_uid();
-
-        // TODO: add a link for the timer
-        // just for debugging
-        if let Event::KeyDown(key) = event {
-            if key.key_code == KeyCode::KeyA {
-                cx.widget_action(
-                    widget_uid,
-                    &Scope::default().path,
-                    StackNavigationAction::NavigateTo(live_id!(exercise_view)),
-                );
-            }
-
-            if key.key_code == KeyCode::KeyS {
-                cx.widget_action(
-                    widget_uid,
-                    &Scope::default().path,
-                    StackNavigationAction::NavigateTo(live_id!(timer_view)),
-                );
-            }
-        }
     }
 }

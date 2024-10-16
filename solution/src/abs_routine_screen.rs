@@ -71,7 +71,7 @@ live_design! {
         }
     }
 
-    TimerScreen = {{TimerScreen}} {
+    AbsRoutineScreen = {{AbsRoutineScreen}} {
         flow: Down
         width: Fill, height: Fill
         align: {x: 0.5, y: 0.0}
@@ -173,7 +173,7 @@ live_design! {
 }
 
 #[derive(Live, LiveHook, Widget)]
-pub struct TimerScreen {
+pub struct AbsRoutineScreen {
     #[deref]
     view: View,
 
@@ -186,7 +186,7 @@ pub struct TimerScreen {
     animator: Animator,
 }
 
-impl Widget for TimerScreen {
+impl Widget for AbsRoutineScreen {
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, scope: &mut Scope) {
         if self.animator.handle_event(cx, event).must_redraw() {
             self.redraw(cx);
@@ -220,7 +220,7 @@ impl Widget for TimerScreen {
     }
 }
 
-impl MatchEvent for TimerScreen {
+impl MatchEvent for AbsRoutineScreen {
     fn handle_actions(&mut self, cx: &mut Cx, actions: &Actions) {
         let mut total_duration = 0.0;
         let mut should_start_timer = false;
@@ -269,7 +269,7 @@ impl MatchEvent for TimerScreen {
     }
 }
 
-impl TimerScreen {
+impl AbsRoutineScreen {
     fn cancel_timer_and_redraw(&mut self, cx: &mut Cx) {
         self.view(id!(controls)).set_visible(false);
         if let Some(timer) = self.timer {

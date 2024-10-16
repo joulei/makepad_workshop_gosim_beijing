@@ -103,7 +103,7 @@ live_design! {
         }
     }
 
-    ExerciseScreen = {{ExerciseScreen}} {
+    DailyWorkoutScreen = {{DailyWorkoutScreen}} {
         flow: Down, spacing: 10
         width: Fill, height: Fill
         show_bg: true
@@ -223,7 +223,7 @@ live_design! {
 }
 
 #[derive(Widget, Live, LiveHook)]
-pub struct ExerciseScreen {
+pub struct DailyWorkoutScreen {
     #[deref]
     view: View,
 
@@ -231,7 +231,7 @@ pub struct ExerciseScreen {
     calories: usize,
 }
 
-impl Widget for ExerciseScreen {
+impl Widget for DailyWorkoutScreen {
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, scope: &mut Scope) {
         self.match_event(cx, event);
         self.view.handle_event(cx, event, scope);
@@ -242,7 +242,7 @@ impl Widget for ExerciseScreen {
     }
 }
 
-impl MatchEvent for ExerciseScreen {
+impl MatchEvent for DailyWorkoutScreen {
     fn handle_actions(&mut self, cx: &mut Cx, actions: &Actions) {
         let burpees_button = self.button(id!(burpees.log_button));
         let box_jumps_button = self.button(id!(box_jumps.log_button));
