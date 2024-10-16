@@ -11,7 +11,7 @@ live_design! {
     ICON_STOP = dep("crate://self/resources/img/icons/stop.svg")
 
     ControlButton = <Button> {
-        width: 50, height: 50
+        width: 45, height: 45
         draw_icon: {
             icon_walk: {width: 12, height: 12}
             instance color: #fff
@@ -137,8 +137,10 @@ live_design! {
             }
         }
 
+        // Workout items
         <SectionDown> {
             spacing: 10
+            margin: {top: 20}
             <View> {
                 padding: {left: 20}
                 width: Fill, height: Fit

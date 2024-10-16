@@ -69,6 +69,17 @@ live_design! {
         }
     }
 
+    CounterButton = <ButtonFlat> {
+        width: 40, height: 40
+        padding: 5
+        draw_text: {
+            color: #f
+            text_style: {
+                font_size: 20.0
+            }
+        }
+    }
+
     ProductScreen = {{ProductScreen}}<SectionDown> {
         width: Fill, height: Fill
         align: {x: 0.5, y: 1.0}
@@ -76,7 +87,7 @@ live_design! {
         show_bg: true
         draw_bg: {
             fn pixel(self) -> vec4 {
-                let color_a = #494743;
+                let color_a = #505267;
                 let color_b = #x080808;
 
                 let dist = distance(self.pos, vec2(0.5, 0.5));
@@ -144,17 +155,7 @@ live_design! {
                     }
                 }
                 <View> { width: Fill}
-                decrease = <Button> {
-                    width: Fit, height: Fit
-                    text: "-"
-                    draw_text: {
-                        color: #xf
-                        text_style: {
-                            font_size: 20.0
-                            line_spacing: 1.0
-                        }
-                    }
-                }
+                decrease = <CounterButton> { text: "-" }
                 counter = <Label> {
                     text: "0"
                     draw_text: {
@@ -165,17 +166,7 @@ live_design! {
                         }
                     }
                 }
-                increase = <Button> {
-                    width: Fit, height: Fit
-                    text: "+"
-                    draw_text: {
-                        color: #xf
-                        text_style: {
-                            font_size: 20.0
-                            line_spacing: 1.0
-                        }
-                    }
-                }
+                increase = <CounterButton> { text: "+" }
             }
             <Button> {
                 width: Fill, height: Fit

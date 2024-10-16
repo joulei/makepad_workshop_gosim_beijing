@@ -10,6 +10,7 @@ live_design! {
     GOLD = dep("crate://self/resources/img/covers/gold.jpg")
     SLEEP_IMG = dep("crate://self/resources/img/sleep.png")
 
+    MOON = dep("crate://self/resources/img/moon.png")
     BOTTLE = dep("crate://self/resources/img/bottle.png")
     CARROT = dep("crate://self/resources/img/carrot.png")
     DUMBELL = dep("crate://self/resources/img/dumbell.png")
@@ -33,7 +34,7 @@ live_design! {
         }
         <Label> { 
             padding: {left: 8}
-            text: "Benjamin", 
+            text: "Julian", 
             draw_text: {
                 color: #f,
                 text_style: <TextBold> {
@@ -51,7 +52,6 @@ live_design! {
         padding: 20
         flow: Down
         width: Fill
-        align: {x: 0.0, y: 0.0}
 
         header = <SectionRight> {
             spacing: 10
@@ -60,10 +60,9 @@ live_design! {
             }
             title = <Label> {
                 draw_text: {
-                    // color: #222430,
-                    color: #3a,
-                    text_style: { //<TextBold> {
-                        font_size: 12.0
+                    color: #2,
+                    text_style: {
+                        font_size: 13.0
                     }
                 }
             }
@@ -86,37 +85,37 @@ live_design! {
         }
     }
 
-    // TODO: replace icon
     SleepBox = <Box> {
         draw_bg: {
             color: #c9a0ff
         }
-        padding: 20
         align: {x: 0.0, y: 0.0}
+        padding: 20
         height: 120 
         flow: Down
         header = {
-            icon = { source: (CARROT) }
+            icon = { source: (MOON) }
             title = { text: "Sleep" }
         }
 
-        <View> { height: Fill }
-        <Label> { 
-            text: "Time in Bed"
-            draw_text: {
-                color: #4a,
-                text_style: {
-                    font_size: 10.0
+        <SectionDown> {
+            width: Fill, height: Fit
+            align: {x: 1.0}
+            <Label> { 
+                text: "Time in Bed"
+                draw_text: {
+                    color: #4a,
+                    text_style: {
+                        font_size: 12.0
+                    }
                 }
             }
-        }
-        <SectionRight> {
             <Label> { 
-                text: "5hr 15min"
+                text: "7hr 18min"
                 draw_text: {
-                    color: #2a,
+                    color: #3a,
                     text_style: {
-                        font_size: 15.0
+                        font_size: 20.0
                     }
                 }
             }
@@ -193,70 +192,52 @@ live_design! {
 
     Store = <SectionDown> {
         margin: {top: 30}
-        spacing: 25.
+        spacing: 10
         width: Fill, height: Fit
-        <SectionDown> {
-            width: Fill, height: Fit
-            <SectionRight> {
-                align: {x: 0.5, y: 0.5}
-                width: Fill, height: Fit
-                spacing: 20.0
-                <SectionDown> {
-                    width: Fill, height: Fit
-                    spacing: 2
-                    <Label> {
-                        text: "LATEST IN OUR STORE", 
-                        draw_text: {
-                            color: #d
-                            text_style: {
-                                font_size: 9.0
-                            }
-                        } 
-                    }
-                    <Label> { 
-                        draw_text: {
-                            color: #f,
-                            text_style: <TextBold> {
-                                font_size: 14.0
-                            }
-                        } 
-                    }
+
+        <Label> {
+            text: "LATEST IN OUR STORE", 
+            draw_text: {
+                color: #d
+                text_style: {
+                    font_size: 9.0
                 }
-            }
+            } 
+        }
     
-            store_section = <RoundedView> {
-                cursor: Hand
-                draw_bg: { 
-                    color: #333645 
-                    radius: 5
-                }
-                height: 100
+        store_section = <RoundedView> {
+            cursor: Hand
+            draw_bg: { 
+                color: #333645 
+                radius: 5
+            }
+            height: 100
+            align: {x: 0.0, y: 0.5}
+            padding: {left: 20, right: 20}
+            flow: Right, spacing: 15
+            img = <Image> {
+                source: (SLEEP_IMG)
+                width: 70, height: 70
+            }
+            description = <SectionDown> {
+                height: Fit
                 align: {x: 0.0, y: 0.5}
-                padding: {left: 20, right: 20}
-                flow: Right, spacing: 15
-                img = <Image> {
-                    source: (SLEEP_IMG)
-                    width: 70, height: 70
-                }
-                description = <SectionDown> {
-                    height: Fit
-                    align: {x: 0.0, y: 0.5}
-                    spacing: 4
-                    <Label> {
-                        text: "Improve your sleep"
-                        draw_text: {
-                            text_style: <TextBold> {
-                                font_size: 12.0
-                            }
+                spacing: 4
+                <Label> {
+                    text: "Improve your sleep"
+                    draw_text: {
+                        color: #f
+                        text_style: <TextBold> {
+                            font_size: 12.0
                         }
                     }
-        
-                    subtitle = <Label> {
-                        text: "Melatonin tablets now available"
-                        draw_text: {
-                            text_style: {
-                                font_size: 9.0
-                            }
+                }
+    
+                subtitle = <Label> {
+                    text: "Melatonin tablets now available"
+                    draw_text: {
+                        text_style: {
+                            font_size: 9.0
                         }
                     }
                 }
