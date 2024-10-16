@@ -7,8 +7,6 @@ live_design! {
 
     import crate::styles::*;
 
-    // TODO: Styling (buttons, background, and image)
-
     SLEEP_IMG = dep("crate://self/resources/img/sleep.png")
     CART = dep("crate://self/resources/img/cart.png")
 
@@ -200,7 +198,6 @@ impl Widget for ProductScreen {
     }
 
     fn draw_walk(&mut self, cx: &mut Cx2d, scope: &mut Scope, walk: Walk) -> DrawStep {
-        // TODO: start with label set and then split into counter and cart_counter?
         self.label(id!(counter)).set_text(&self.counter.to_string());
         self.view.draw_walk(cx, scope, walk)
     }
@@ -209,8 +206,7 @@ impl Widget for ProductScreen {
 impl MatchEvent for ProductScreen {
     fn handle_actions(&mut self, cx: &mut Cx, actions: &Actions) {
         if self.button(id!(decrease)).clicked(actions) {
-            // TODO: decrement counter, clamp at 0
-            self.counter = self.counter.saturating_sub(1);
+            self.counter -= 1;
             self.cart(id!(cart)).update_product_count(cx, self.counter);
             self.redraw(cx);
         }

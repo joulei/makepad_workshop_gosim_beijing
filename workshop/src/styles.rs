@@ -10,9 +10,6 @@ live_design! {
     }
 
     COLOR_BG = #232531
-    // BG_COLOR = #efeeee
-    // BG_COLOR_DARKER = #E4EDF9
-    // BG_COLOR_DARKER = #E1EBF9
     COLOR_BG_DARKER = #211d20
         
     COLOR_TEXT_PRIMARY = #6f7d95
@@ -21,14 +18,8 @@ live_design! {
     COLOR_ICON = (COLOR_TEXT_PRIMARY)
     COLOR_ICON_SECONDARY = #a1b0c9
 
-    COLOR_PURPLE = #c9a0ff
-    COLOR_YELLOW = #fede67
-    COLOR_ORANGE = #ff9a62
-    COLOR_BLUE = #94dbfb
-    COLOR_GREEN = #b6f36a
-
-    SectionRight = <View> { flow: Right, spacing: 10. }
-    SectionDown = <View> { flow: Down, spacing: 10. }
+    SectionRight = <View> { flow: Right }
+    SectionDown = <View> { flow: Down }
 
     RoundedImage = <Image> {
         draw_bg: {

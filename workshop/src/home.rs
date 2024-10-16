@@ -7,9 +7,9 @@ live_design! {
 
     import crate::styles::*;
 
-    GOLD = dep("crate://self/resources/img/covers/gold.jpg")
     SLEEP_IMG = dep("crate://self/resources/img/sleep.png")
 
+    MOON = dep("crate://self/resources/img/moon.png")
     BOTTLE = dep("crate://self/resources/img/bottle.png")
     CARROT = dep("crate://self/resources/img/carrot.png")
     DUMBELL = dep("crate://self/resources/img/dumbell.png")
@@ -33,7 +33,7 @@ live_design! {
         }
         <Label> { 
             padding: {left: 8}
-            text: "Benjamin", 
+            text: "Julian", 
             draw_text: {
                 color: #f,
                 text_style: <TextBold> {
@@ -51,18 +51,17 @@ live_design! {
         padding: 20
         flow: Down
         width: Fill
-        align: {x: 0.0, y: 0.0}
 
         header = <SectionRight> {
+            spacing: 10
             icon = <Image> {
                 width: 20, height: 20
             }
             title = <Label> {
                 draw_text: {
-                    // color: #222430,
-                    color: #3a,
-                    text_style: { //<TextBold> {
-                        font_size: 12.0
+                    color: #2,
+                    text_style: {
+                        font_size: 13.0
                     }
                 }
             }
@@ -89,32 +88,33 @@ live_design! {
         draw_bg: {
             color: #c9a0ff
         }
-        padding: 20
         align: {x: 0.0, y: 0.0}
+        padding: 20
         height: 120 
         flow: Down
         header = {
-            icon = { source: (CARROT) }
+            icon = { source: (MOON) }
             title = { text: "Sleep" }
         }
 
-        <View> { height: Fill }
-        <Label> { 
-            text: "Time in Bed"
-            draw_text: {
-                color: #4a,
-                text_style: {
-                    font_size: 10.0
+        <SectionDown> {
+            width: Fill, height: Fit
+            align: {x: 1.0}
+            <Label> { 
+                text: "Time in Bed"
+                draw_text: {
+                    color: #4a,
+                    text_style: {
+                        font_size: 12.0
+                    }
                 }
             }
-        }
-        <SectionRight> {
             <Label> { 
-                text: "5hr 15min"
+                text: "7hr 18min"
                 draw_text: {
-                    color: #2a,
+                    color: #3a,
                     text_style: {
-                        font_size: 15.0
+                        font_size: 20.0
                     }
                 }
             }
@@ -187,74 +187,46 @@ live_design! {
             icon = { source: (DUMBELL) }
             title = { text: "Workout" }
         }
-    }
 
-    Store = <SectionDown> {
-        margin: {top: 30}
-        spacing: 25.
-        width: Fill, height: Fit
-        <SectionDown> {
-            width: Fill, height: Fit
-            <SectionRight> {
+        <SectionRight> {
+            spacing: 5
+            height: Fill
+            daily_workout = <RoundedView> {
+                cursor: Hand
+                width: Fit, height: Fill
                 align: {x: 0.5, y: 0.5}
-                width: Fill, height: Fit
-                spacing: 20.0
-                <SectionDown> {
-                    width: Fill, height: Fit
-                    spacing: 2
-                    <Label> {
-                        text: "LATEST IN OUR STORE", 
-                        draw_text: {
-                            color: #d
-                            text_style: {
-                                font_size: 9.0
-                            }
-                        } 
-                    }
-                    <Label> { 
-                        draw_text: {
-                            color: #f,
-                            text_style: <TextBold> {
-                                font_size: 14.0
-                            }
-                        } 
+                padding: {left: 10, right: 10, top: 5, bottom: 5}
+                show_bg: true
+                draw_bg: {
+                    border_width: 1.0
+                    border_color: #2a
+                }
+                <Label> {
+                    text: "Daily\nWorkout"
+                    draw_text: {
+                        color: #2a
+                        text_style: <TextBold> {
+                            font_size: 9.0
+                        }
                     }
                 }
             }
-    
-            store_section = <RoundedView> {
+
+            abs_routine = <RoundedView> {
                 cursor: Hand
-                draw_bg: { 
-                    color: #333645 
-                    radius: 5
+                width: Fit, height: Fill
+                align: {x: 0.5, y: 0.5}
+                padding: {left: 10, right: 10, top: 5, bottom: 5}
+                show_bg: true
+                draw_bg: {
+                    color: (COLOR_BG)
                 }
-                height: 100
-                align: {x: 0.0, y: 0.5}
-                padding: {left: 20, right: 20}
-                flow: Right, spacing: 15
-                img = <Image> {
-                    source: (SLEEP_IMG)
-                    width: 70, height: 70
-                }
-                description = <SectionDown> {
-                    height: Fit
-                    align: {x: 0.0, y: 0.5}
-                    spacing: 4
-                    <Label> {
-                        text: "Improve your sleep"
-                        draw_text: {
-                            text_style: <TextBold> {
-                                font_size: 12.0
-                            }
-                        }
-                    }
-        
-                    subtitle = <Label> {
-                        text: "Melatonin tablets now available"
-                        draw_text: {
-                            text_style: {
-                                font_size: 9.0
-                            }
+                <Label> {
+                    text: "Abs\nRoutine"
+                    draw_text: {
+                        color: #f
+                        text_style: <TextBold> {
+                            font_size: 9.0
                         }
                     }
                 }
@@ -262,12 +234,67 @@ live_design! {
         }
     }
 
-    Home = <View> {
+    Store = <SectionDown> {
+        margin: {top: 30}
+        spacing: 10
+        width: Fill, height: Fit
+
+        <Label> {
+            text: "LATEST IN OUR STORE", 
+            draw_text: {
+                color: #d
+                text_style: {
+                    font_size: 9.0
+                }
+            } 
+        }
+    
+        store_section = <RoundedView> {
+            cursor: Hand
+            draw_bg: { 
+                color: #333645 
+                radius: 5
+            }
+            height: 100
+            align: {x: 0.0, y: 0.5}
+            padding: {left: 20, right: 20}
+            flow: Right, spacing: 15
+            img = <Image> {
+                source: (SLEEP_IMG)
+                width: 70, height: 70
+            }
+            description = <SectionDown> {
+                height: Fit
+                align: {x: 0.0, y: 0.5}
+                spacing: 4
+                <Label> {
+                    text: "Improve your sleep"
+                    draw_text: {
+                        color: #f
+                        text_style: <TextBold> {
+                            font_size: 12.0
+                        }
+                    }
+                }
+    
+                subtitle = <Label> {
+                    text: "Melatonin tablets now available"
+                    draw_text: {
+                        text_style: {
+                            font_size: 9.0
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    Home = <SectionDown> {
         padding: {top: 35, left: 20, right: 20, bottom: 25}
         flow: Down
         spacing: 5.0
 
-        HomeHeader = <HomeHeader> {}
+        <HomeHeader> {}
 
         pills = <SectionRight> {
             height: Fit, width: Fill
@@ -282,11 +309,31 @@ live_design! {
 
         feed = <SectionDown> {
             padding: 10
+            spacing: 8.
             margin: {top: 10}
             height: Fit
             show_bg: true
 
             <SleepBox> {}
+            <SectionRight> {
+                spacing: 8.
+                height: Fit, width: Fill
+                <SectionDown> {
+                    width: Fill, height: Fit
+                    spacing: 8.
+                    <NutritionBox> {}
+                    <StepsBox> {}
+                }
+
+                <SectionDown> {
+                    width: Fill, height: Fit
+                    spacing: 8.
+                    <HabitsBox> {}
+                    workout_box = <WorkoutBox> {}
+                }
+            }
         }
+
+        <Store> {}
     }
 }

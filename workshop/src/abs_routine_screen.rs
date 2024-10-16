@@ -7,12 +7,11 @@ live_design! {
 
     import crate::styles::*;
 
-    BEACH = dep("crate://self/resources/img/covers/beach.jpg")
     ICON_PLAY = dep("crate://self/resources/img/icons/play.svg")
     ICON_STOP = dep("crate://self/resources/img/icons/stop.svg")
 
     ControlButton = <Button> {
-        width: 65, height: 65
+        width: 45, height: 45
         draw_icon: {
             icon_walk: {width: 12, height: 12}
             instance color: #fff
@@ -26,14 +25,13 @@ live_design! {
 
     Preset = <RoundedView> {
         width: Fill, height: Fit
-        cursor: Hand
         flow: Right
         show_bg: true
         draw_bg: {
             color: (COLOR_BG)
         }
         align: {x: 0.5, y: 0.5}
-        padding: {left: 20, right: 20, top: 15, bottom: 15}
+        padding: {left: 20, right: 20, top: 10, bottom: 10}
         content = <SectionDown> {
             spacing: 5.0
             align: {x: 0.0, y: 0.5}
@@ -73,7 +71,7 @@ live_design! {
         }
     }
 
-    TimerScreen = <View> {
+    AbsRoutineScreen = {{AbsRoutineScreen}} {
         flow: Down
         width: Fill, height: Fill
         align: {x: 0.5, y: 0.0}
@@ -85,15 +83,12 @@ live_design! {
         }
 
         // Timer
-        // TODO(Julian): add animation
         <RoundedView> {
             padding: 10
             width: 250, height: 250
             align: {x: 0.5, y: 0.5}
             draw_bg: {
                 radius: 60.0
-                // color: #x0
-                // color: #c9a0ff
                 color: #ff9a62
                 border_width: 4.0
                 border_color: (COLOR_BG)
@@ -142,8 +137,10 @@ live_design! {
             }
         }
 
+        // Workout items
         <SectionDown> {
             spacing: 10
+            margin: {top: 20}
             <View> {
                 padding: {left: 20}
                 width: Fill, height: Fit
@@ -158,7 +155,40 @@ live_design! {
                 }
             }
             planks = <Preset> {}
+            crunches = <Preset> { 
+                content = { 
+                    title = { text: "Crunches" }
+                    subtitle = { text: "45 seconds" }
+                }
+            }
+            leg_raises = <Preset> { 
+                content = { 
+                    title = { text: "Leg raises" }
+                    subtitle = { text: "30 seconds" }
+                }
+            }
         }
         
     }
+}
+
+#[derive(Live, LiveHook, Widget)]
+pub struct AbsRoutineScreen {
+    #[deref]
+    view: View,
+}
+
+impl Widget for AbsRoutineScreen {
+    fn handle_event(&mut self, cx: &mut Cx, event: &Event, scope: &mut Scope) {
+        self.view.handle_event(cx, event, scope);
+        self.match_event(cx, event);
+    }
+
+    fn draw_walk(&mut self, cx: &mut Cx2d, scope: &mut Scope, walk: Walk) -> DrawStep {
+        self.view.draw_walk(cx, scope, walk)
+    }
+}
+
+impl MatchEvent for AbsRoutineScreen {
+    fn handle_actions(&mut self, _cx: &mut Cx, _actions: &Actions) {}
 }

@@ -7,16 +7,14 @@ live_design! {
 
     import crate::styles::*;
 
-    // TODO: Styling (buttons, background, and image)
-
     SLEEP_IMG = dep("crate://self/resources/img/sleep.png")
     CART = dep("crate://self/resources/img/cart.png")
 
-    Cart = {{Cart}} <RoundedView> {
+    Cart = <RoundedView> {
         padding: 10
         draw_bg: {
             color: #fede67
-            radius: 10
+            radius: 10.
         }
         width: Fit, height: Fit
         image = <RotatedImage> {
@@ -43,52 +41,27 @@ live_design! {
                 }
             }
         }
+    }
 
-        animator: {
-            shake = {
-                default: init,
-                init = {
-                    from: {all: Forward {duration: 0.5}} // Snap
-                    apply: {
-                        image = {
-                            draw_bg: { rotation: 0.0}
-                        }
-                    }
-                }
-
-                // TODO breakdown explanation
-                on = {
-                    redraw: true,
-                    from: {all: BounceLoop {duration: 0.5, end: 1.0}} 
-                    apply: {
-                        image = {
-                            draw_bg: { rotation: 0.5}
-                        }
-                    }
-                }
+    CounterButton = <ButtonFlat> {
+        width: 40, height: 40
+        padding: 5
+        draw_text: {
+            color: #f
+            text_style: {
+                font_size: 20.0
             }
         }
     }
 
-    ProductScreen = {{ProductScreen}}<SectionDown> {
+    ProductScreen = <SectionDown> {
         width: Fill, height: Fill
         align: {x: 0.5, y: 1.0}
         spacing: 40
-        show_bg: true // TODO: Move background to StackNavigationView
+        show_bg: true
         draw_bg: {
             fn pixel(self) -> vec4 {
-                // a gradient from center outwards
-                // red
-                // let color_a = #d2375d;
-                // let color_b = #741631;
-                
-                // // blue
-                // let color_a = #a1bed0;
-                // let color_b = #4c81a7;
-                // return #4c81a7;
-                // return #759cff;
-                // // black
-                let color_a = #494743;
+                let color_a = #505267;
                 let color_b = #x080808;
 
                 let dist = distance(self.pos, vec2(0.5, 0.5));
@@ -156,19 +129,9 @@ live_design! {
                     }
                 }
                 <View> { width: Fill}
-                decrease = <Button> {
-                    width: Fit, height: Fit
-                    text: "-"
-                    draw_text: {
-                        color: #xf
-                        text_style: {
-                            font_size: 20.0
-                            line_spacing: 1.0
-                        }
-                    }
-                }
+                decrease = <CounterButton> { text: "-" }
                 counter = <Label> {
-                    text: "1"
+                    text: "0"
                     draw_text: {
                         color: #xf
                         text_style: <TextBold> {
@@ -177,28 +140,12 @@ live_design! {
                         }
                     }
                 }
-                increase = <Button> {
-                    width: Fit, height: Fit
-                    text: "+"
-                    draw_text: {
-                        color: #xf
-                        text_style: {
-                            font_size: 20.0
-                            line_spacing: 1.0
-                        }
-                    }
-                }
+                increase = <CounterButton> { text: "+" }
             }
             <Button> {
-                // draw_bg: {
-                //     // color: #f9d34e
-                //     color: #759cff
-                // }
-                // align: {x: 0.5, y: 0.5}
                 width: Fill, height: Fit
                 padding: {top: 20, bottom: 20}
                 text: "Buy Now"
-                // enabled: false
                 draw_text: {
                     text_style: <TextBold> {
                         font_size: 12.0
@@ -206,114 +153,6 @@ live_design! {
                     }
                     color: #f
                 }
-            }
-        }
-    }
-}
-
-#[derive(Live, LiveHook, Widget)]
-pub struct ProductScreen {
-    #[deref]
-    view: View,
-    
-    #[rust]
-    counter: usize
-}
-
-impl Widget for ProductScreen {
-    fn handle_event(&mut self, cx: &mut Cx, event: &Event, scope: &mut Scope) {
-        self.match_event(cx, event);
-        self.view.handle_event(cx, event, scope);
-    }
-
-    fn draw_walk(&mut self, cx: &mut Cx2d, scope: &mut Scope, walk: Walk) -> DrawStep {
-        // TODO: start with label set and then split into counter and cart_counter?
-        self.label(id!(counter)).set_text(&self.counter.to_string());
-        self.view.draw_walk(cx, scope, walk)
-    }
-}
-
-impl MatchEvent for ProductScreen {
-    fn handle_actions(&mut self, cx: &mut Cx, actions: &Actions) {
-        if self.button(id!(decrease)).clicked(actions) {
-            // decrement counter, clamp at 0
-            self.counter = self.counter.saturating_sub(1);
-            self.cart(id!(cart)).update_product_count(cx, self.counter);
-            self.redraw(cx);
-        }
-
-        if self.button(id!(increase)).clicked(actions) {
-            self.counter += 1;
-            self.cart(id!(cart)).update_product_count(cx, self.counter);
-            self.redraw(cx);
-        }
-    }
-}
-
-#[derive(Live, LiveHook, Widget)]
-pub struct Cart {
-    #[deref]
-    view: View,
-
-    #[rust]
-    quantity: usize,
-
-    #[animator]
-    animator: Animator,
-}
-
-impl Widget for Cart {
-    fn handle_event(&mut self, cx: &mut Cx, event: &Event, scope: &mut Scope) {
-        if self.animator_handle_event(cx, event).must_redraw() {
-            self.view.redraw(cx);
-        }
-
-        self.view.handle_event(cx, event, scope);
-    }
-
-    fn draw_walk(&mut self, cx: &mut Cx2d, scope: &mut Scope, walk: Walk) -> DrawStep {
-        // if self.animator.need_init() || self.animator_in_state(cx, id!(shake.init)) {
-        //     self.animator_play(cx, id!(shake.on));
-        // }
-        self.view.draw_walk(cx, scope, walk)
-    }
-}
-
-impl CartRef {
-    fn update_product_count(&mut self, cx: &mut Cx, new_count: usize) {
-        if let Some(mut inner) = self.borrow_mut() {
-            inner.label(id!(cart_counter)).set_text(&new_count.to_string());
-
-            if new_count > 0 {
-                if !inner.animator_in_state(cx, id!(shake.on)) {
-                    inner.animator_play(cx, id!(shake.on));
-                }
-
-                inner.view(id!(cart_bubble)).apply_over(cx, live!{
-                    draw_bg: {
-                        color: #e74c3c
-                    }
-                });
-    
-                inner.label(id!(cart_counter)).apply_over(cx, live!{
-                    draw_text: {
-                        color: #f
-                    }
-                });
-            } else {
-                inner.animator_play(cx, id!(shake.init));
-
-                inner.view(id!(cart_bubble)).apply_over(cx, live!{
-                    draw_bg: {
-                        color: #f
-                    }
-                });
-    
-                inner.label(id!(cart_counter)).apply_over(cx, live!{
-                    draw_text: {
-                        color: #x0
-                    }
-                });
             }
         }
     }
