@@ -7,12 +7,11 @@ live_design! {
 
     import crate::styles::*;
 
-    BEACH = dep("crate://self/resources/img/covers/beach.jpg")
     ICON_PLAY = dep("crate://self/resources/img/icons/play.svg")
     ICON_STOP = dep("crate://self/resources/img/icons/stop.svg")
 
     ControlButton = <Button> {
-        width: 65, height: 65
+        width: 50, height: 50
         draw_icon: {
             icon_walk: {width: 12, height: 12}
             instance color: #fff
@@ -26,14 +25,13 @@ live_design! {
 
     Preset = <RoundedView> {
         width: Fill, height: Fit
-        cursor: Hand
         flow: Right
         show_bg: true
         draw_bg: {
             color: (COLOR_BG)
         }
         align: {x: 0.5, y: 0.5}
-        padding: {left: 20, right: 20, top: 15, bottom: 15}
+        padding: {left: 20, right: 20, top: 10, bottom: 10}
         content = <SectionDown> {
             spacing: 5.0
             align: {x: 0.0, y: 0.5}
@@ -65,7 +63,7 @@ live_design! {
             }
         }
 
-        pause_button = <ControlButton> {
+        stop_button = <ControlButton> {
             visible: false
             draw_icon: {
                 svg_file: (ICON_STOP)
@@ -85,15 +83,12 @@ live_design! {
         }
 
         // Timer
-        // TODO: add animation
         <RoundedView> {
             padding: 10
             width: 250, height: 250
             align: {x: 0.5, y: 0.5}
             draw_bg: {
                 radius: 60.0
-                // color: #x0
-                // color: #c9a0ff
                 color: #ff9a62
                 border_width: 4.0
                 border_color: (COLOR_BG)
@@ -199,12 +194,6 @@ impl Widget for TimerScreen {
         self.match_event(cx, event);
         if let Some(timer) = self.timer {
             if timer.is_event(event).is_some() {
-                // if self.animator_in_state(cx, id!(blink.off)) {
-                //     self.animator_play(cx, id!(blink.on));
-                // } else {
-                //     self.animator_play(cx, id!(blink.off));
-                // }
-                
                 self.total_time = Some(self.total_time.unwrap() - 0.08);
                 if self.total_time <= Some(0.05) {
                     cx.stop_timer(timer);
@@ -236,11 +225,7 @@ impl MatchEvent for TimerScreen {
 
         // Cancel button
         if self.button(id!(cancel_button)).clicked(actions) {
-            self.view(id!(controls)).set_visible(false);
-            self.total_time = None;
-            self.timer = None;
-            self.redraw(cx);
-            self.label(id!(timer)).set_text("00:00");
+            self.cancel_timer_and_redraw(cx);
         }
 
         // Pause button
@@ -258,40 +243,19 @@ impl MatchEvent for TimerScreen {
             self.redraw(cx);
         }
 
-        // Presets
+        // Handle the controls on each preset
+        // Heads-up: only implemented for the first preset (planks)
         if self.button(id!(planks.play_button)).clicked(actions) {
             total_duration = 60.0;
             should_start_timer = true;
             self.view(id!(planks)).apply_over(cx, live!{ draw_bg: { color: #x333645 } });
-            log!("planks play button clicked");
             self.button(id!(planks.play_button)).set_visible(false);
-            self.button(id!(planks.pause_button)).set_visible(true);
+            self.button(id!(planks.stop_button)).set_visible(true);
+            self.redraw(cx);
         }
 
         if self.button(id!(planks.stop_button)).clicked(actions) {
-            cx.stop_timer(self.timer.unwrap());
-            self.timer = None;
-            should_start_timer = false;
-            log!("STOP button clicked");
-            // self.view(id!(planks)).apply_over(cx, live!{ draw_bg: { color: #x333645 } });
-            self.button(id!(planks.play_button)).set_visible(true);
-            self.button(id!(planks.pause_button)).set_visible(false);
-        }
-
-        if self.button(id!(crunches.play_button)).clicked(actions) {
-            total_duration = 45.0;  
-            should_start_timer = true;
-            self.view(id!(crunches)).apply_over(cx, live!{ draw_bg: { color: #x333645 } });
-            self.button(id!(crunches.play_button)).set_visible(false);
-            self.button(id!(crunches.pause_button)).set_visible(true);
-        }
-
-        if self.button(id!(leg_raises.play_button)).clicked(actions) {
-            total_duration = 30.0;
-            should_start_timer = true;
-            self.view(id!(leg_raises)).apply_over(cx, live!{ draw_bg: { color: #x333645 } });
-            self.button(id!(leg_raises.play_button)).set_visible(false);
-            self.button(id!(leg_raises.pause_button)).set_visible(true);
+            self.cancel_timer_and_redraw(cx);
         }
 
         if should_start_timer {
@@ -300,5 +264,21 @@ impl MatchEvent for TimerScreen {
             self.timer = Some(cx.start_interval(0.08));
             self.redraw(cx);
         }
+    }
+}
+
+impl TimerScreen {
+    fn cancel_timer_and_redraw(&mut self, cx: &mut Cx) {
+        self.view(id!(controls)).set_visible(false);
+        if let Some(timer) = self.timer {
+            cx.stop_timer(timer);
+        }
+        self.total_time = None;
+        self.timer = None;
+        self.view(id!(planks)).apply_over(cx, live!{ draw_bg: { color: #x232531 } });
+        self.button(id!(planks.stop_button)).set_visible(false);
+        self.button(id!(planks.play_button)).set_visible(true);
+        self.label(id!(timer)).set_text("00:00");
+        self.redraw(cx)
     }
 }

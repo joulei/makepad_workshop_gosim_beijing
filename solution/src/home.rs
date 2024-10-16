@@ -54,6 +54,7 @@ live_design! {
         align: {x: 0.0, y: 0.0}
 
         header = <SectionRight> {
+            spacing: 10
             icon = <Image> {
                 width: 20, height: 20
             }
@@ -85,6 +86,7 @@ live_design! {
         }
     }
 
+    // TODO: replace icon
     SleepBox = <Box> {
         draw_bg: {
             color: #c9a0ff
@@ -282,12 +284,14 @@ live_design! {
 
         feed = <SectionDown> {
             padding: 10
+            spacing: 8.
             margin: {top: 10}
             height: Fit
             show_bg: true
 
             <SleepBox> {}
             <SectionRight> {
+                spacing: 8.
                 height: Fit, width: Fill
                 <SectionDown> {
                     width: Fill, height: Fit

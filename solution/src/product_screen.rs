@@ -16,7 +16,7 @@ live_design! {
         padding: 10
         draw_bg: {
             color: #fede67
-            radius: 10
+            radius: 10.
         }
         width: Fit, height: Fit
         image = <RotatedImage> {
@@ -48,7 +48,7 @@ live_design! {
             shake = {
                 default: init,
                 init = {
-                    from: {all: Forward {duration: 0.5}} // Snap
+                    from: {all: Forward {duration: 0.5}}
                     apply: {
                         image = {
                             draw_bg: { rotation: 0.0}
@@ -56,7 +56,6 @@ live_design! {
                     }
                 }
 
-                // TODO breakdown explanation
                 on = {
                     redraw: true,
                     from: {all: BounceLoop {duration: 0.5, end: 1.0}} 
@@ -74,20 +73,9 @@ live_design! {
         width: Fill, height: Fill
         align: {x: 0.5, y: 1.0}
         spacing: 40
-        show_bg: true // TODO: Move background to StackNavigationView
+        show_bg: true
         draw_bg: {
             fn pixel(self) -> vec4 {
-                // a gradient from center outwards
-                // red
-                // let color_a = #d2375d;
-                // let color_b = #741631;
-                
-                // // blue
-                // let color_a = #a1bed0;
-                // let color_b = #4c81a7;
-                // return #4c81a7;
-                // return #759cff;
-                // // black
                 let color_a = #494743;
                 let color_b = #x080808;
 
@@ -168,7 +156,7 @@ live_design! {
                     }
                 }
                 counter = <Label> {
-                    text: "1"
+                    text: "0"
                     draw_text: {
                         color: #xf
                         text_style: <TextBold> {
@@ -190,15 +178,9 @@ live_design! {
                 }
             }
             <Button> {
-                // draw_bg: {
-                //     // color: #f9d34e
-                //     color: #759cff
-                // }
-                // align: {x: 0.5, y: 0.5}
                 width: Fill, height: Fit
                 padding: {top: 20, bottom: 20}
                 text: "Buy Now"
-                // enabled: false
                 draw_text: {
                     text_style: <TextBold> {
                         font_size: 12.0
@@ -217,7 +199,7 @@ pub struct ProductScreen {
     view: View,
     
     #[rust]
-    counter: usize
+    counter: i32
 }
 
 impl Widget for ProductScreen {
@@ -236,7 +218,7 @@ impl Widget for ProductScreen {
 impl MatchEvent for ProductScreen {
     fn handle_actions(&mut self, cx: &mut Cx, actions: &Actions) {
         if self.button(id!(decrease)).clicked(actions) {
-            // decrement counter, clamp at 0
+            // TODO: decrement counter, clamp at 0
             self.counter = self.counter.saturating_sub(1);
             self.cart(id!(cart)).update_product_count(cx, self.counter);
             self.redraw(cx);
@@ -254,9 +236,6 @@ impl MatchEvent for ProductScreen {
 pub struct Cart {
     #[deref]
     view: View,
-
-    #[rust]
-    quantity: usize,
 
     #[animator]
     animator: Animator,
@@ -280,7 +259,7 @@ impl Widget for Cart {
 }
 
 impl CartRef {
-    fn update_product_count(&mut self, cx: &mut Cx, new_count: usize) {
+    fn update_product_count(&mut self, cx: &mut Cx, new_count: i32) {
         if let Some(mut inner) = self.borrow_mut() {
             inner.label(id!(cart_counter)).set_text(&new_count.to_string());
 

@@ -7,17 +7,13 @@ live_design! {
 
     import crate::home::*;
     import crate::timer_screen::*;
-    import crate::program_screen::*;
     import crate::exercise_screen::*;
     import crate::product_screen::*;
     import crate::styles::*;
 
     App = {{App}} {
         ui: <Window> {
-            // Mention: size and position
             window: {position: vec2(970, 80), inner_size: vec2(440, 800)},
-            // Mention: pass
-            pass: {clear_color: (COLOR_BG)}
 
             body = {
                 show_bg: true
@@ -25,7 +21,7 @@ live_design! {
                     fn pixel(self) -> vec4 {
                         // gradient to make it slightly darker at the very bottom
                         // Define the amount of darkening at the bottom (e.g., 5% darker)
-                        let darkened_color = (COLOR_BG_DARKER); //COLOR_BG * 0.95;
+                        let darkened_color = (COLOR_BG_DARKER);
 
                         // Use smoothstep for a smoother gradient transition
                         let t = smoothstep(0.8, 1.0, self.pos.y);
@@ -35,20 +31,7 @@ live_design! {
                     }
                 }
                 nav = <StackNavigation> {
-                    // TODO: Shortcut?
                     root_view = <Home> {}
-                    program_view = <StackNavigationView> {
-                        header = {
-                            content = {
-                                title_container = {
-                                    title = {
-                                        text: "Program"
-                                    }
-                                }
-                            }
-                        }
-                        body = <ProgramScreen> {}
-                    }
                     exercise_view = <StackNavigationView> {
                         header = {
                             content = {
@@ -108,7 +91,6 @@ impl LiveRegister for App {
         crate::home::live_design(cx);
         crate::timer_screen::live_design(cx);
         crate::styles::live_design(cx);
-        crate::program_screen::live_design(cx);
         crate::exercise_screen::live_design(cx);
         crate::product_screen::live_design(cx);
     }
@@ -143,6 +125,7 @@ impl AppMain for App {
         self.match_event(cx, event);
         let widget_uid = self.ui.widget_uid();
 
+        // TODO: add a link for the timer
         // just for debugging
         if let Event::KeyDown(key) = event {
             if key.key_code == KeyCode::KeyA {

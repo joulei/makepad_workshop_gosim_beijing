@@ -9,65 +9,22 @@ live_design! {
 
     FIRE = dep("crate://self/resources/img/fire.png")
 
-    Routine = <RoundedView> {
-        flow: Down
-        align: {x: 0.5, y: 0.5}
-        padding: 10
-        width: 150, height: Fit
-        show_bg: true
-        draw_bg: {color: #c55367}
-        // draw_bg: {color: #x0}
-
-        <RoundedView> {
-            padding: 10
-            margin: {bottom: 10}
-            width: Fit, height: Fit
-            show_bg: true
-            draw_bg: { color: #a53b57 }
-            <Image> {
-                source: (FIRE)
-                width: 40, height: 40
-            }
-        }
-
-        <Label> {
-            text: "Chest"
-            draw_text: {
-                color: #f
-                text_style: <TextBold> {
-                    line_spacing: 1
-                    font_size: 20
-                }
-            }
-        }
-
-        <Label> {
-            text: "Calories"
-            draw_text: {
-                color: #f
-                text_style: {
-                    line_spacing: 1
-                    font_size: 12
-                }
-            }
-        }
-    }
-
     Exercise = <RoundedView> {
         cursor: Hand
         show_bg: true
         draw_bg: {
             color: #333645
-            // dark green
-            // color: #b6f36a
         }
+        flow: Right
         align: {x: 0.5, y: 0.5}
         width: Fill, height: Fit
         padding: 10
-        width: Fill, height: Fit
+        spacing: 10
         content = <SectionDown> {
             width: Fill, height: Fit
+            spacing: 10
             header = <SectionRight> {
+                spacing: 10
                 width: Fill, height: Fit
                 <RoundedView> {
                     height: 20, width: 8
@@ -78,16 +35,16 @@ live_design! {
                     }
                 }
                 title = <Label> {
-                    text: "Push-ups"
+                    text: "Burpees"
                     draw_text: {
                         color: #xf
                         text_style: <TextBold> {
-                            font_size: 12
+                            font_size: 11
                         }
                     }
                 }
-                <View> {width: 10}
-                <Label> {
+                <View> {width: Fill}
+                series =<Label> {
                     text: "15 x 3"
                     draw_text: {
                         color: #xf
@@ -96,48 +53,54 @@ live_design! {
                         }
                     }
                 }
-
-                // <CheckBox> { text: "Push Ups"}
             }
-            <View> {
-                width: Fill, height: Fit
-                <Label> {
-                    text: "Biceps, triceps and shoulders"
-                    draw_text: {
-                        color: #c
-                        text_style: {
-                            font_size: 10
-                        }
+            // sub_header =<View> {
+                // width: Fill, height: Fit
+            description = <Label> {
+                text: "Biceps, triceps and shoulders"
+                draw_text: {
+                    color: #c
+                    text_style: {
+                        font_size: 10
                     }
                 }
             }
-            <SectionRight> {
-                width: Fill, height: Fit
-                <SectionDown> {
-                    spacing: 0
-                    width: Fit, height: Fit
-                    set_1_chbox = <CheckBox> { text: "Set 1"}
-                    set_2_chbox = <CheckBox> { text: "Set 2"}
-                    set_3_chbox = <CheckBox> { text: "Set 3"}
-                }
-                <View> { width: 50 }
-                done_button = <Button> {
-                    height: Fill
-                    width: Fit
-                    text: "Complete All"
-                    draw_text: {
-                        color: #f
-                        text_style: <TextBold> {
-                            font_size: 12
-                        }
-                    }
+            // }
+            // <SectionRight> {
+            //     width: Fill, height: Fit
+            //     // <SectionDown> {
+            //     //     spacing: 0
+            //     //     width: Fit, height: Fit
+            //     //     set_1_chbox = <CheckBox> { text: "Set 1"}
+            //     //     set_2_chbox = <CheckBox> { text: "Set 2"}
+            //     //     set_3_chbox = <CheckBox> { text: "Set 3"}
+            //     // }
+            //     // <View> { width: 50 }
+            //     log_button = <Button> {
+            //         height: 50
+            //         width: Fit
+            //         padding: {left: 20, right: 20}
+            //         text: "Done"
+            //         draw_text: {
+            //             color: #f
+            //             text_style: <TextBold> {
+            //                 font_size: 12
+            //             }
+            //         }
+            //     }
+            // }
+        }
+        log_button = <Button> {
+            height: 50, width: Fit
+            padding: {left: 15, right: 15}
+            text: "Log"
+            draw_text: {
+                color: #f
+                text_style: <TextBold> {
+                    font_size: 12
                 }
             }
         }
-        // show_bg: true
-        // draw_bg: {
-        //     #333645
-        // }
     }
 
     ExerciseScreen = {{ExerciseScreen}} {
@@ -148,9 +111,7 @@ live_design! {
             color: (COLOR_BG)
         }
 
-        padding: {top: 100} // TODO: this shouldnt be necessary
-        padding: {left: 25, right: 25}
-
+        padding: {top: 100, left: 25, right: 25}
 
         <Label> {
             text: "Today's Activity"
@@ -172,15 +133,7 @@ live_design! {
             }
         }
 
-        // <ScrollXView> {
-        //     height: 150
-        //     spacing: 15
-        //     <Routine> {}
-        //     <Routine> {}
-        //     <Routine> {}
-        //     <Routine> {}
-        // }
-
+        // Calories bar
         <RoundedView> {
             margin: {top: 20}
             spacing: 10
@@ -190,7 +143,7 @@ live_design! {
             calories = <RoundedView> {
                 flow: Down
                 align: {x: 0.5, y: 0.5}
-                width: 100, height: Fill
+                width: 100, height: 310
                 show_bg: true
                 draw_bg: {color: #c55367}
 
@@ -230,12 +183,39 @@ live_design! {
             }
             items = <SectionDown> {
                 width: Fill, height: Fit
-                pushups = <Exercise> {}
-                squats = <Exercise> {
-                    content = { header = { title = { text: "Squats"} }}
+                spacing: 10
+                burpees = <Exercise> {}
+                box_jumps = <Exercise> {
+                    content = { 
+                        header = { 
+                            title = { text: "Box Jumps"}
+                        }
+                        description = {
+                            text: "Legs, glutes and core"
+                        }
+                    }
                 }
-                lunges = <Exercise> {
-                    content = { header = { title = { text: "Lunges"} }}
+                rope_jumping = <Exercise> {
+                    content = { 
+                        header = { 
+                            title = { text: "Jump Rope"} 
+                            series = { text: "5 min"}
+                        }
+                        description = {
+                            text: "Full body"
+                        }
+                    }
+                }
+                jump_squats = <Exercise> {
+                    content = { 
+                        header = { 
+                            title = { text: "Jump Squats"} 
+                            series = { text: "3 x 10"}
+                        }
+                        description = {
+                            text: "Legs, glutes and core"
+                        }
+                    }
                 }
             }
         }
@@ -264,68 +244,65 @@ impl Widget for ExerciseScreen {
 
 impl MatchEvent for ExerciseScreen {
     fn handle_actions(&mut self, cx: &mut Cx, actions: &Actions) {
-        let pushups_button = self.button(id!(pushups.done_button));
-        let pushups_set_1_chbox = self.check_box(id!(pushups.set_1_chbox));    
-        let pushups_set_2_chbox = self.check_box(id!(pushups.set_2_chbox));
-        let pushups_set_3_chbox = self.check_box(id!(pushups.set_3_chbox));
+        let burpees_button = self.button(id!(burpees.log_button));
+        let box_jumps_button = self.button(id!(box_jumps.log_button));
+        let rope_jumping_button = self.button(id!(rope_jumping.log_button));
+        let jump_squats_button = self.button(id!(jump_squats.log_button));
 
-        let squats_button = self.button(id!(squats.done_button));
-        let squats_set_1_chbox = self.check_box(id!(squats.set_1_chbox));
-        let squats_set_2_chbox = self.check_box(id!(squats.set_2_chbox));
-        let squats_set_3_chbox = self.check_box(id!(squats.set_3_chbox));
-        
-        let lunges_button = self.button(id!(lunges.done_button));
-        let lunges_set_1_chbox = self.check_box(id!(lunges.set_1_chbox));
-        let lunges_set_2_chbox = self.check_box(id!(lunges.set_2_chbox));
-        let lunges_set_3_chbox = self.check_box(id!(lunges.set_3_chbox));
-
-
-        // Pushups
-        if pushups_button.clicked(actions) {
-            self.calories += 300;
+        // Burpees
+        if burpees_button.clicked(actions) {
+            self.calories += 180;
             self.label(id!(calories_number))
                 .set_text_and_redraw(cx, &format!("{0}", self.calories));
 
-            self.view(id!(pushups)).apply_over(cx, live! {
+            self.view(id!(burpees)).apply_over(cx, live! {
                 draw_bg: {color: #x2a2c36 }
             });
 
-            // pushups_button.set_text_and_redraw(cx, "Done");
-            // pushups_button.set_enabled(false);
-            pushups_set_1_chbox.set_selected(cx, true);
-            pushups_set_2_chbox.set_selected(cx, true);
-            pushups_set_3_chbox.set_selected(cx, true); 
+            burpees_button.set_enabled(false); 
+            burpees_button.set_text_and_redraw(cx, "Done");
         }
 
-
-        // Squats
-        if squats_button.clicked(actions) {
-            self.calories += 200;
+        // Box Jumps
+        if box_jumps_button.clicked(actions) {
+            self.calories += 60;
             self.label(id!(calories_number))
                 .set_text_and_redraw(cx, &format!("{0}", self.calories));
 
-            self.view(id!(squats)).apply_over(cx, live! {
+            self.view(id!(box_jumps)).apply_over(cx, live! {
                 draw_bg: {color: #x2a2c36 }
             });
 
-            squats_set_1_chbox.set_selected(cx, true);
-            squats_set_2_chbox.set_selected(cx, true);
-            squats_set_3_chbox.set_selected(cx, true);
+            box_jumps_button.set_enabled(false); 
+            box_jumps_button.set_text_and_redraw(cx, "Done");
         }
 
-        // Lunges
-        if lunges_button.clicked(actions) {
-            self.calories += 150;
+        // Jump Rope
+        if rope_jumping_button.clicked(actions) {
+            self.calories += 100;
             self.label(id!(calories_number))
                 .set_text_and_redraw(cx, &format!("{0}", self.calories));
 
-            self.view(id!(lunges)).apply_over(cx, live! {
+            self.view(id!(rope_jumping)).apply_over(cx, live! {
                 draw_bg: {color: #x2a2c36 }
             });
 
-            lunges_set_1_chbox.set_selected(cx, true);
-            lunges_set_2_chbox.set_selected(cx, true);
-            lunges_set_3_chbox.set_selected(cx, true);
+            rope_jumping_button.set_enabled(false); 
+            rope_jumping_button.set_text_and_redraw(cx, "Done");
+        }
+
+        // Jump Squats
+        if jump_squats_button.clicked(actions) {
+            self.calories += 70;
+            self.label(id!(calories_number))
+                .set_text_and_redraw(cx, &format!("{0}", self.calories));
+
+            self.view(id!(jump_squats)).apply_over(cx, live! {
+                draw_bg: {color: #x2a2c36 }
+            });
+
+            jump_squats_button.set_enabled(false); 
+            jump_squats_button.set_text_and_redraw(cx, "Done");
         }
     }
 }
