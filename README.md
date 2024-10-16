@@ -172,6 +172,7 @@ fn handle_event(&mut self, cx: &mut Cx, event: &Event, scope: &mut Scope) {
     }
 }
 ```
+You can also stop the timer by calling `cx.stop_timer(timer_id);`
 
 ### Animator
 First, include the animator in your widget:
