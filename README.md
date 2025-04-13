@@ -1,8 +1,16 @@
 # Makepad Workshop
 
+## App Demo Show
+
+![makepad-workshop1](imgs/makepad-workshop1.png)
+![makepad-workshop-gif](imgs/makepad-workshop.gif)
+
 ## Cheat Sheet
+
 ### Widgets
+
 #### View
+
 ```rust
 <View> {
     width: Fit, height: Fill // or fixed, e.g. width: 250
@@ -17,6 +25,7 @@
 ```
 
 #### Label
+
 ```rust
 <Label> {
 	text: "Hello, World"
@@ -29,7 +38,9 @@
 	}
 }
 ```
+
 #### Button
+
 ```rust
 <Button> {
 	text: "Click me"
@@ -38,7 +49,9 @@
 	draw_icon: { /*...*/ }
 }
 ```
+
 #### Inheritance
+
 ```rust
 MyButton = <Button> {
 	text: "Click me"
@@ -52,6 +65,7 @@ MyButton = <Button> {
 ```
 
 ### Implementing a Custom Widget
+
 ```rust
 // dsl:
 live_design! {
@@ -89,12 +103,14 @@ impl Widget for MyWidget {
 #### Events
 
 Signals from user interactions like clicks, key presses, or system changes like window resize, etc. Event usually come from the platform level.
+
 #### Actions
 
-Represent internal state changes of the application or operations that need to be executed. 
+Represent internal state changes of the application or operations that need to be executed.
 For example `Button` emits a `ButtonAction::Clicked` whenever the button is clicked.
 
 Widgets usually implement helpers so you can "ask" a specific widget instance if an action happened:
+
 ```rust
 impl MatchEvent for App {
 	fn handle_actions(&mut self, cx: &mut Cx, actions: &Actions) {
@@ -111,6 +127,7 @@ For example, `StackNavigation` handles `StackNavigationAction::NavigateTo` which
 #### StackNavigation
 
 In the DSL, add your views inside a `StackNavigationView` within the `StackNavigation`.
+
 ```
 nav = <StackNavigation> {
     root_view = <Home> {}
@@ -128,7 +145,9 @@ nav = <StackNavigation> {
     }
 }
 ```
+
 In the rust code, make sure to handle the navigation actions:
+
 ```rust
 impl MatchEvent for App {
     fn handle_actions(&mut self, cx: &mut Cx, actions: &Actions) {
@@ -137,7 +156,9 @@ impl MatchEvent for App {
     }
 }
 ```
+
 You can navigate to a view by calling:
+
 ```rust
 cx.widget_action(
 	widget_uid,
@@ -145,6 +166,7 @@ cx.widget_action(
 	StackNavigationAction::NavigateTo(live_id!(my_view)),
 );
 ```
+
 ### Querying DSL
 
 ```rust
@@ -156,15 +178,20 @@ self.view(id!(my_view)).apply_over(cx, live!{ draw_bg: { color: #f }})
 
 self.view(id!(my_view)).visible(false)
 ```
+
 #### Timer
+
 You can use Makepad's Timer API to create a timer that will dispatch events at a given interval.
 
 For example, to create a timer that will dispatch an event every second, you can do:
+
 ```rust
 let timer = cx.start_interval(1.0);
 ```
+
 Where `timer` is the timer id, which you can then use to check
 if an event is a tick of the timer:
+
 ```rust
 fn handle_event(&mut self, cx: &mut Cx, event: &Event, scope: &mut Scope) {
     if self.timer.is_event(event).is_some() {
@@ -172,16 +199,20 @@ fn handle_event(&mut self, cx: &mut Cx, event: &Event, scope: &mut Scope) {
     }
 }
 ```
+
 You can also stop the timer by calling `cx.stop_timer(timer_id);`
 
 ### Animator
+
 First, include the animator in your widget:
+
 ```rust
 #[animator]
 animator: Animator,
 ```
 
 Make sure to handle the animator events:
+
 ```rust
 impl Widget for MyWidget {
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, scope: &mut Scope) {
@@ -195,6 +226,7 @@ impl Widget for MyWidget {
 ```
 
 Then, in your DSL you can use Animator to modify properties over time.
+
 ```rust
 animator: {
     shake = {
@@ -220,7 +252,9 @@ animator: {
     }
 }
 ```
+
 Finally, to start the animation, call:
+
 ```rust
 if !self.animator_in_state(cx, id!(shake.on)) { // don't play if already in that state
     self.animator_play(cx, id!(shake.on));
