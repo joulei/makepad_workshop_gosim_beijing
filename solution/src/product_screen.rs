@@ -1,20 +1,20 @@
 use makepad_widgets::*;
 
 live_design! {
-    import makepad_widgets::base::*;
-    import makepad_widgets::theme_desktop_dark::*;
-    import makepad_draw::shader::std::*;
+    use link::theme::*;
+    use link::shaders::*;
+    use link::widgets::*;
 
-    import crate::styles::*;
+    use crate::styles::*;
 
     SLEEP_IMG = dep("crate://self/resources/img/sleep.png")
     CART = dep("crate://self/resources/img/cart.png")
 
-    Cart = {{Cart}} <RoundedView> {
+    pub Cart = {{Cart}} <RoundedView> {
         padding: 10
         draw_bg: {
             color: #fede67
-            radius: 10.
+            border_radius: 10.
         }
         width: Fit, height: Fit
         image = <RotatedImage> {
@@ -28,7 +28,7 @@ live_design! {
             show_bg: true
             draw_bg: {
                 color: #f
-                radius: 4
+                border_radius: 4
             }
             cart_counter = <Label> {
                 text: "0"
@@ -56,7 +56,7 @@ live_design! {
 
                 on = {
                     redraw: true,
-                    from: {all: BounceLoop {duration: 0.5, end: 1.0}} 
+                    from: {all: BounceLoop {duration: 0.5, end: 1.0}}
                     apply: {
                         image = {
                             draw_bg: { rotation: 0.5}
@@ -67,7 +67,7 @@ live_design! {
         }
     }
 
-    CounterButton = <ButtonFlat> {
+    pub CounterButton = <ButtonFlat> {
         width: 40, height: 40
         padding: 5
         draw_text: {
@@ -78,7 +78,7 @@ live_design! {
         }
     }
 
-    ProductScreen = {{ProductScreen}}<SectionDown> {
+    pub ProductScreen = {{ProductScreen}}<SectionDown> {
         width: Fill, height: Fill
         align: {x: 0.5, y: 1.0}
         spacing: 40
@@ -105,7 +105,7 @@ live_design! {
             width: 350, height: 350
             source: (SLEEP_IMG)
         }
-        
+
         <RoundedView> {
             flow: Down
             width: Fill, height: 250
@@ -186,7 +186,7 @@ live_design! {
 pub struct ProductScreen {
     #[deref]
     view: View,
-    
+
     #[rust]
     counter: i32
 }
@@ -198,7 +198,7 @@ impl Widget for ProductScreen {
     }
 
     fn draw_walk(&mut self, cx: &mut Cx2d, scope: &mut Scope, walk: Walk) -> DrawStep {
-        self.label(id!(counter)).set_text(&self.counter.to_string());
+        self.label(id!(counter)).set_text(cx, &self.counter.to_string());
         self.view.draw_walk(cx, scope, walk)
     }
 }
@@ -248,7 +248,7 @@ impl Widget for Cart {
 impl CartRef {
     fn update_product_count(&mut self, cx: &mut Cx, new_count: i32) {
         if let Some(mut inner) = self.borrow_mut() {
-            inner.label(id!(cart_counter)).set_text(&new_count.to_string());
+            inner.label(id!(cart_counter)).set_text(cx, &new_count.to_string());
 
             if new_count > 0 {
                 if !inner.animator_in_state(cx, id!(shake.on)) {
@@ -260,7 +260,7 @@ impl CartRef {
                         color: #e74c3c
                     }
                 });
-    
+
                 inner.label(id!(cart_counter)).apply_over(cx, live!{
                     draw_text: {
                         color: #f
@@ -274,7 +274,7 @@ impl CartRef {
                         color: #f
                     }
                 });
-    
+
                 inner.label(id!(cart_counter)).apply_over(cx, live!{
                     draw_text: {
                         color: #x0

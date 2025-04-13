@@ -1,15 +1,15 @@
 use makepad_widgets::*;
 
 live_design! {
-    import makepad_widgets::base::*;
-    import makepad_widgets::theme_desktop_dark::*;
-    import makepad_draw::shader::std::*;
-    
-    import crate::styles::*;
-    import crate::home::*;
-    import crate::daily_workout_screen::*;
-    import crate::abs_routine_screen::*;
-    import crate::product_screen::*;
+    use link::theme::*;
+    use link::shaders::*;
+    use link::widgets::*;
+
+    use crate::styles::*;
+    use crate::home::*;
+    use crate::daily_workout_screen::*;
+    use crate::abs_routine_screen::*;
+    use crate::product_screen::*;
 
     App = {{App}} {
         ui: <Window> {
@@ -84,7 +84,7 @@ impl LiveRegister for App {
 
 impl MatchEvent for App {
     fn handle_actions(&mut self, cx: &mut Cx, actions: &Actions) {
-        let mut navigation = self.ui.stack_navigation(id!(nav));
+        let navigation = self.ui.stack_navigation(id!(nav));
         navigation.handle_stack_view_actions(cx, &actions);
 
         if let Some(_) = self.ui.view(id!(store_section)).finger_down(&actions) {

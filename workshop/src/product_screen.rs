@@ -1,11 +1,11 @@
 use makepad_widgets::*;
 
 live_design! {
-    import makepad_widgets::base::*;
-    import makepad_widgets::theme_desktop_dark::*;
-    import makepad_draw::shader::std::*;
+    use link::theme::*;
+    use link::shaders::*;
+    use link::widgets::*;
 
-    import crate::styles::*;
+    use crate::styles::*;
 
     SLEEP_IMG = dep("crate://self/resources/img/sleep.png")
     CART = dep("crate://self/resources/img/cart.png")
@@ -14,7 +14,7 @@ live_design! {
         padding: 10
         draw_bg: {
             color: #fede67
-            radius: 10.
+            border_radius: 10.
         }
         width: Fit, height: Fit
         image = <RotatedImage> {
@@ -28,7 +28,7 @@ live_design! {
             show_bg: true
             draw_bg: {
                 color: #f
-                radius: 4
+                border_radius: 4
             }
             cart_counter = <Label> {
                 text: "0"
@@ -81,7 +81,7 @@ live_design! {
             width: 350, height: 350
             source: (SLEEP_IMG)
         }
-        
+
         <RoundedView> {
             flow: Down
             width: Fill, height: 250
