@@ -1,15 +1,15 @@
 use makepad_widgets::*;
 
 live_design! {
-    import makepad_widgets::base::*;
-    import makepad_widgets::theme_desktop_dark::*;
-    import makepad_draw::shader::std::*;
+    use link::theme::*;
+    use link::shaders::*;
+    use link::widgets::*;
 
-    import crate::styles::*;
+    use crate::styles::*;
 
     FIRE = dep("crate://self/resources/img/fire.png")
 
-    Exercise = <RoundedView> {
+    pub Exercise = <RoundedView> {
         cursor: Hand
         show_bg: true
         draw_bg: {
@@ -31,7 +31,7 @@ live_design! {
                     show_bg: true
                     draw_bg: {
                         color: #b6f36a
-                        radius: 2
+                        border_radius: 2
                     }
                 }
                 title = <Label> {
@@ -103,7 +103,7 @@ live_design! {
         }
     }
 
-    DailyWorkoutScreen = {{DailyWorkoutScreen}} {
+    pub DailyWorkoutScreen = {{DailyWorkoutScreen}} {
         flow: Down, spacing: 10
         width: Fill, height: Fill
         show_bg: true
@@ -186,8 +186,8 @@ live_design! {
                 spacing: 10
                 burpees = <Exercise> {}
                 box_jumps = <Exercise> {
-                    content = { 
-                        header = { 
+                    content = {
+                        header = {
                             title = { text: "Box Jumps"}
                         }
                         description = {
@@ -196,9 +196,9 @@ live_design! {
                     }
                 }
                 rope_jumping = <Exercise> {
-                    content = { 
-                        header = { 
-                            title = { text: "Jump Rope"} 
+                    content = {
+                        header = {
+                            title = { text: "Jump Rope"}
                             series = { text: "5 min"}
                         }
                         description = {
@@ -207,9 +207,9 @@ live_design! {
                     }
                 }
                 jump_squats = <Exercise> {
-                    content = { 
-                        header = { 
-                            title = { text: "Jump Squats"} 
+                    content = {
+                        header = {
+                            title = { text: "Jump Squats"}
                             series = { text: "3 x 10"}
                         }
                         description = {
@@ -253,56 +253,56 @@ impl MatchEvent for DailyWorkoutScreen {
         if burpees_button.clicked(actions) {
             self.calories += 180;
             self.label(id!(calories_number))
-                .set_text_and_redraw(cx, &format!("{0}", self.calories));
+                .set_text(cx, &format!("{0}", self.calories));
 
             self.view(id!(burpees)).apply_over(cx, live! {
                 draw_bg: {color: #x2a2c36 }
             });
 
-            burpees_button.set_enabled(false); 
-            burpees_button.set_text_and_redraw(cx, "Done");
+            burpees_button.set_enabled(cx, false);
+            burpees_button.set_text(cx, "Done");
         }
 
         // Box Jumps
         if box_jumps_button.clicked(actions) {
             self.calories += 60;
             self.label(id!(calories_number))
-                .set_text_and_redraw(cx, &format!("{0}", self.calories));
+                .set_text(cx, &format!("{0}", self.calories));
 
             self.view(id!(box_jumps)).apply_over(cx, live! {
                 draw_bg: {color: #x2a2c36 }
             });
 
-            box_jumps_button.set_enabled(false); 
-            box_jumps_button.set_text_and_redraw(cx, "Done");
+            box_jumps_button.set_enabled(cx, false);
+            box_jumps_button.set_text(cx, "Done");
         }
 
         // Jump Rope
         if rope_jumping_button.clicked(actions) {
             self.calories += 100;
             self.label(id!(calories_number))
-                .set_text_and_redraw(cx, &format!("{0}", self.calories));
+                .set_text(cx, &format!("{0}", self.calories));
 
             self.view(id!(rope_jumping)).apply_over(cx, live! {
                 draw_bg: {color: #x2a2c36 }
             });
 
-            rope_jumping_button.set_enabled(false); 
-            rope_jumping_button.set_text_and_redraw(cx, "Done");
+            rope_jumping_button.set_enabled(cx, false);
+            rope_jumping_button.set_text(cx, "Done");
         }
 
         // Jump Squats
         if jump_squats_button.clicked(actions) {
             self.calories += 70;
             self.label(id!(calories_number))
-                .set_text_and_redraw(cx, &format!("{0}", self.calories));
+                .set_text(cx, &format!("{0}", self.calories));
 
             self.view(id!(jump_squats)).apply_over(cx, live! {
                 draw_bg: {color: #x2a2c36 }
             });
 
-            jump_squats_button.set_enabled(false); 
-            jump_squats_button.set_text_and_redraw(cx, "Done");
+            jump_squats_button.set_enabled(cx, false);
+            jump_squats_button.set_text(cx, "Done");
         }
     }
 }

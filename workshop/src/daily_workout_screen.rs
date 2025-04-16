@@ -1,11 +1,11 @@
 use makepad_widgets::*;
 
 live_design! {
-    import makepad_widgets::base::*;
-    import makepad_widgets::theme_desktop_dark::*;
-    import makepad_draw::shader::std::*;
+    use link::theme::*;
+    use link::shaders::*;
+    use link::widgets::*;
 
-    import crate::styles::*;
+    use crate::styles::*;
 
     FIRE = dep("crate://self/resources/img/fire.png")
 
@@ -31,7 +31,7 @@ live_design! {
                     show_bg: true
                     draw_bg: {
                         color: #b6f36a
-                        radius: 2
+                        border_radius: 2
                     }
                 }
                 title = <Label> {
@@ -186,8 +186,8 @@ live_design! {
                 spacing: 10
                 burpees = <Exercise> {}
                 box_jumps = <Exercise> {
-                    content = { 
-                        header = { 
+                    content = {
+                        header = {
                             title = { text: "Box Jumps"}
                         }
                         description = {
@@ -196,9 +196,9 @@ live_design! {
                     }
                 }
                 rope_jumping = <Exercise> {
-                    content = { 
-                        header = { 
-                            title = { text: "Jump Rope"} 
+                    content = {
+                        header = {
+                            title = { text: "Jump Rope"}
                             series = { text: "5 min"}
                         }
                         description = {
@@ -207,9 +207,9 @@ live_design! {
                     }
                 }
                 jump_squats = <Exercise> {
-                    content = { 
-                        header = { 
-                            title = { text: "Jump Squats"} 
+                    content = {
+                        header = {
+                            title = { text: "Jump Squats"}
                             series = { text: "3 x 10"}
                         }
                         description = {

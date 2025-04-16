@@ -1,55 +1,55 @@
 use makepad_widgets::*;
 
 live_design! {
-    import makepad_widgets::base::*;
-    import makepad_widgets::theme_desktop_dark::*;
-    import makepad_draw::shader::std::*;
-    
-    TextBold = {
+    use link::theme::*;
+    use link::shaders::*;
+    use link::widgets::*;
+
+    pub TextBold = {
         font: {path: dep("crate://makepad-widgets/resources/GoNotoKurrent-Bold.ttf")}
     }
 
-    COLOR_BG = #232531
-    COLOR_BG_DARKER = #211d20
-        
-    COLOR_TEXT_PRIMARY = #f
-    COLOR_TEXT_SECONDARY = #b
+    pub COLOR_BG = #232531
+    pub COLOR_BG_DARKER = #211d20
 
-    COLOR_ICON = #6f7d95
-    COLOR_ICON_SECONDARY = #a1b0c9
+    pub COLOR_TEXT_PRIMARY = #f
+    pub COLOR_TEXT_SECONDARY = #b
 
-    SectionRight = <View> { flow: Right }
-    SectionDown = <View> { flow: Down }
+    pub COLOR_ICON = #6f7d95
+    pub COLOR_ICON_SECONDARY = #a1b0c9
 
-    RoundedImage = <Image> {
+    pub SectionRight = <View> { flow: Right }
+    pub SectionDown = <View> { flow: Down }
+
+    pub RoundedImage = <Image> {
         draw_bg: {
-            instance radius: 10.0
-            instance border_width: 0.0
+            instance border_radius: 10.0
+            instance border_size: 0.0
             instance border_color: #f
 
             fn pixel(self) -> vec4 {
                 let sdf = Sdf2d::viewport(self.pos * self.rect_size);
                 let size = self.rect_size;
                 let center = size * 0.5;
-                let radius = min(min(self.radius, size.x * 0.5), size.y * 0.5);
-    
-                sdf.box(0., 0., size.x, size.y, radius);
-                
+                let border_radius = min(min(self.border_radius, size.x * 0.5), size.y * 0.5);
+
+                sdf.box(0., 0., size.x, size.y, border_radius);
+
                 // Apply the image color
                 let image_color = sample2d(self.image, self.pos);
                 sdf.fill_keep(image_color);
-    
+
                 // Apply border if specified
-                if self.border_width > 0.0 {
+                if self.border_size > 0.0 {
                     sdf.stroke(self.border_color, self.border_width);
                 }
-    
+
                 return sdf.result;
             }
         }
     }
 
-    StackNavigationView = <StackNavigationView> {
+    pub StackNavigationView = <StackNavigationView> {
         header = {
             content = {
                 button_container = {

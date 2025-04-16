@@ -1,11 +1,11 @@
 use makepad_widgets::*;
 
 live_design! {
-    import makepad_widgets::base::*;
-    import makepad_widgets::theme_desktop_dark::*;
-    import makepad_draw::shader::std::*;
+    use link::theme::*;
+    use link::shaders::*;
+    use link::widgets::*;
 
-    import crate::styles::*;
+    use crate::styles::*;
 
     ICON_PLAY = dep("crate://self/resources/img/icons/play.svg")
     ICON_STOP = dep("crate://self/resources/img/icons/stop.svg")
@@ -88,9 +88,9 @@ live_design! {
             width: 250, height: 250
             align: {x: 0.5, y: 0.5}
             draw_bg: {
-                radius: 60.0
+                border_radius: 60.0
                 color: #ff9a62
-                border_width: 4.0
+                border_size: 4.0
                 border_color: (COLOR_BG)
             }
 
@@ -155,20 +155,20 @@ live_design! {
                 }
             }
             planks = <Preset> {}
-            crunches = <Preset> { 
-                content = { 
+            crunches = <Preset> {
+                content = {
                     title = { text: "Crunches" }
                     subtitle = { text: "45 seconds" }
                 }
             }
-            leg_raises = <Preset> { 
-                content = { 
+            leg_raises = <Preset> {
+                content = {
                     title = { text: "Leg raises" }
                     subtitle = { text: "30 seconds" }
                 }
             }
         }
-        
+
     }
 }
 

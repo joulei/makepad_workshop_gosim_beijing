@@ -1,11 +1,11 @@
 use makepad_widgets::*;
 
 live_design! {
-    import makepad_widgets::base::*;
-    import makepad_widgets::theme_desktop_dark::*;
-    import makepad_draw::shader::std::*;
+    use link::theme::*;
+    use link::shaders::*;
+    use link::widgets::*;
 
-    import crate::styles::*;
+    use crate::styles::*;
 
     SLEEP_IMG = dep("crate://self/resources/img/sleep.png")
 
@@ -21,32 +21,32 @@ live_design! {
         flow: Down
         width: Fill,
         height: Fit
-        <Label> { 
+        <Label> {
             padding: {left: 8}
-            text: "Good morning,", 
+            text: "Good morning,",
             draw_text: {
                 // color: #9,
                 text_style: <TextBold> {
                     font_size: 15.0
                 }
-            } 
+            }
         }
-        <Label> { 
+        <Label> {
             padding: {left: 8}
-            text: "Julian", 
+            text: "Julian",
             draw_text: {
                 color: #f,
                 text_style: <TextBold> {
                     font_size: 15.0
                 }
-            } 
+            }
         }
     }
 
     Box = <RoundedView> {
         cursor: Hand
         draw_bg: {
-            radius: 5
+            border_radius: 5
         }
         padding: 20
         flow: Down
@@ -72,8 +72,8 @@ live_design! {
         width: 80, height: 30
         align: {x: 0.5, y: 0.5}
         draw_bg: {
-            radius: 7.0
-            border_width: 1.0
+            border_radius: 7.0
+            border_size: 1.0
             border_color: #3
         }
         lbl = <Label> {
@@ -90,7 +90,7 @@ live_design! {
         }
         align: {x: 0.0, y: 0.0}
         padding: 20
-        height: 120 
+        height: 120
         flow: Down
         header = {
             icon = { source: (MOON) }
@@ -100,7 +100,7 @@ live_design! {
         <SectionDown> {
             width: Fill, height: Fit
             align: {x: 1.0}
-            <Label> { 
+            <Label> {
                 text: "Time in Bed"
                 draw_text: {
                     color: #4a,
@@ -109,7 +109,7 @@ live_design! {
                     }
                 }
             }
-            <Label> { 
+            <Label> {
                 text: "7hr 18min"
                 draw_text: {
                     color: #3a,
@@ -198,7 +198,7 @@ live_design! {
                 padding: {left: 10, right: 10, top: 5, bottom: 5}
                 show_bg: true
                 draw_bg: {
-                    border_width: 1.0
+                    border_size: 1.0
                     border_color: #2a
                 }
                 <Label> {
@@ -240,20 +240,20 @@ live_design! {
         width: Fill, height: Fit
 
         <Label> {
-            text: "LATEST IN OUR STORE", 
+            text: "LATEST IN OUR STORE",
             draw_text: {
                 color: #d
                 text_style: {
                     font_size: 9.0
                 }
-            } 
+            }
         }
-    
+
         store_section = <RoundedView> {
             cursor: Hand
-            draw_bg: { 
-                color: #333645 
-                radius: 5
+            draw_bg: {
+                color: #333645
+                border_radius: 5
             }
             height: 100
             align: {x: 0.0, y: 0.5}
@@ -276,7 +276,7 @@ live_design! {
                         }
                     }
                 }
-    
+
                 subtitle = <Label> {
                     text: "Melatonin tablets now available"
                     draw_text: {
@@ -296,7 +296,7 @@ live_design! {
                 // Gradient to make it slightly darker at the very bottom
                 // Use smoothstep for a smoother gradient transition
                 let result = smoothstep(0.8, 1.0, self.pos.y);
-                
+
                 // Mix the colors based on the interpolated value 'result'
                 return mix(COLOR_BG, COLOR_BG_DARKER, result);
             }
